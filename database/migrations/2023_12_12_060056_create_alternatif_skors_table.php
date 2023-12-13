@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('alternatif_skors', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('alternatif_id');
+            $table->foreign('alternatif_id')->references('id')->on('alternatif_models')->onDelete('cascade');
+
+            $table->unsignedBigInteger('criteria_id');
+            $table->foreign('criteria_id')->references('id')->on('criteria_models')->onDelete('cascade');
+
+            $table->float('score');
             $table->timestamps();
         });
     }

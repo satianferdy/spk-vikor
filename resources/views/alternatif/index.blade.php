@@ -18,11 +18,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>All Users</h4>
+                            <h4>All Data Alternatif</h4>
                         </div>
                         <div class="card-body">
                             <div class="card-header">
-                                <a href="" class="btn btn-primary">Add User</a>
+                                <a href="{{ route('alternatif.create') }}" class="btn btn-primary">Add Alternatif</a>
                             </div>
                             <div class="float-right">
                                 <form method="GET">
@@ -42,45 +42,41 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Name</th>
+                                        @foreach ($criteria as $c)
+                                            <th>{{ $c->name }}</th>
+                                        @endforeach
                                         <th>Action</th>
                                     </tr>
                                     <tr>
-                                        <td>1</td>
-                                        <td>Administrator</td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-danger">Delete</a>
-                                        <td>
+                                        @forelse ($alternatif as $a)
+                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $a->name }}</td>
+                                            @foreach ($criteria as $cr)
+                                                @php
+                                                    // menggunakan methof first() untuk object pertama
+                                                    $s = $scores
+                                                        ->where('ida', $a->id)
+                                                        ->where('idc', $cr->id)
+                                                        ->first();
+                                                @endphp
+                                                <td>{{ $s ? $s->score : '' }}</td>
+                                            @endforeach
+                                            <td>
+                                                <a href="{{ route('alternatif.edit', $a->id) }}"
+                                                    class="btn btn-primary">Edit</a>
+                                                <form action="{{ route('alternatif.destroy', $a->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button onclick="return confirm('confirmasi delete data?')"
+                                                        class="btn btn-danger">Delete</button>
+                                                </form>
+                                            <td>
+                                            @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center">No Data Found</td>
                                     </tr>
-                                    {{-- @forelse ($users as $index => $user)
-                                        <tr>
-                                            <td>
-                                                {{ $index + $users->firstItem() }}
-                                            </td>
-                                            <td>{{ $user->name }}
-                                                <div class="table-links">
-                                                    <a href="#">View</a>
-                                                    <div class="bullet"></div>
-                                                    <a href="#">Edit</a>
-                                                    <div class="bullet"></div>
-                                                    <a href="#" class="text-danger">Trash</a>
-                                                </div>
-                                            </td>
-                                            <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
-                                            <td>{{ $user->phone }}</td>
-                                            <td>
-                                                @if ($user->email_verified_at != null)
-                                                    <div class="badge badge-success">Verified</div>
-                                                @else
-                                                    <div class="badge badge-warning">Unverified</div>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="5" class="text-center">No Data Found</td>
-                                        </tr>
-                                    @endforelse --}}
+                                    @endforelse
+                                    </tr>
                                 </table>
                             </div>
                             <div class="float-right">

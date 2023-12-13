@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'User List')
+@section('title', 'Criteria Add Data')
 
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Add Data Alternatif</h1>
+            <h1>Add Data Criteria</h1>
         </div>
         <div class="section-body">
             <h2 class="section-title">Form Validation</h2>
@@ -13,32 +13,49 @@
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-12">
                     <div class="card">
-                        <form>
-                            <div class="card-header">
-                                <h4>Default Validation</h4>
-                            </div>
-                            <div class="card-body">
+                        <div class="card-header">
+                            <h4>Default Validation</h4>
+                        </div>
+                        <div class="card-body">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <form action="{{ route('criteria.store') }}" method="POST">
+                                @csrf
                                 <div class="form-group">
-                                    <label>Your Name</label>
-                                    <input type="text" class="form-control" required="" />
+                                    <label for="name">Kode Name</label>
+                                    <input id="name" type="text" class="form-control" placeholder="example: CI"
+                                        name="name" required />
                                 </div>
                                 <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" class="form-control" required="" />
+                                    <label for="type">Type</label>
+                                    <select class="form-control" id="type" name="type">
+                                        <option value="benefit">Benefit</option>
+                                        <option value="cost">Cost</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Subject</label>
-                                    <input type="email" class="form-control" />
+                                    <label>Weight</label>
+                                    <input id="weight" type="number" class="form-control" step="any"
+                                        placeholder="example: 0.15" name="weight" required />
                                 </div>
-                                <div class="form-group mb-0">
-                                    <label>Message</label>
-                                    <textarea class="form-control" required=""></textarea>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <input id="description" type="text" class="form-control"
+                                        placeholder="example: Absensi" name="description" required>
                                 </div>
-                            </div>
-                            <div class="card-footer text-right">
-                                <button class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
+                                <div class="card-footer text-right">
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -48,7 +48,7 @@
                                         <th>Action</th>
                                     </tr>
                                     <tr>
-                                        @forelse ($criteriaModel as $cr)
+                                        @forelse ($criterion as $cr)
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $cr->name }}</td>
                                             <td>{{ $cr->type }}</td>
@@ -86,5 +86,4 @@
         </div>
     </section>
 @endsection
-
 @section('sidebar')
