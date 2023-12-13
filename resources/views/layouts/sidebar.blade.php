@@ -16,7 +16,7 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Data Processing</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="index-0.html">Data Alternatif</a></li>
+                    <li><a class="nav-link" href="{{ route('criteria.index') }}">Data Alternatif</a></li>
                     <li><a class="nav-link" href="index.html">Data Alternatif & Value</a></li>
                 </ul>
             </li>

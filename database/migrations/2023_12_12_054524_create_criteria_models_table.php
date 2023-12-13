@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('criteria_models', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100)->unique();
+            $table->string('code', 100)->unique();
             $table->enum('type', ['benefit', 'cost']);
             $table->float('weight');
-            $table->String('description', 255)->nullable();
+            $table->String('description', 255);
             $table->timestamps();
         });
     }

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CriteriaModelController;
+use App\Http\Controllers\AlternatifModelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,15 @@ Route::get('/', function () {
     return view('dashboard.home');
 });
 
-Route::get('/alternatif', function () {
-    return view('alternatif.index');
-});
+Route::resources([
+    'criteria' => CriteriaModelController::class,
+    'alternatif' => AlternatifModelController::class,
+]);
+
+// Route::get('/alternatif', function () {
+//     return view('alternatif.index');
+// });
+
+// Route::get('/alternatif/add', function () {
+//     return view('alternatif.create');
+// });
