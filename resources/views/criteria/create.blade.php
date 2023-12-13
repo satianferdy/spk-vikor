@@ -27,12 +27,12 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('criteria.store') }}" method="POST">
+                            <form action="{{ route('criteria.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="name">Kode Name</label>
-                                    <input id="name" type="text" class="form-control" placeholder="example: CI"
-                                        name="name" required />
+                                    <label for="code">Kode Name</label>
+                                    <input id="code" type="text" class="form-control" placeholder="example: CI"
+                                        name="code" required />
                                 </div>
                                 <div class="form-group">
                                     <label for="type">Type</label>
@@ -42,7 +42,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Weight</label>
+                                    <label for="weight">Weight</label>
                                     <input id="weight" type="number" class="form-control" step="any"
                                         placeholder="example: 0.15" name="weight" required />
                                 </div>

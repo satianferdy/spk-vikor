@@ -12,7 +12,7 @@ class CriteriaModel extends Model
     protected $table = 'criteria_models';
 
     protected $fillable =[
-        'name',
+        'code',
         'type',
         'weight',
         'description'

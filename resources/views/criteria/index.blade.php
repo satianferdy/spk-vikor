@@ -47,10 +47,10 @@
                                         <th>Description</th>
                                         <th>Action</th>
                                     </tr>
-                                    <tr>
-                                        @forelse ($criterion as $cr)
+                                    @forelse ($criterion as $cr)
+                                        <tr>
                                             <td>{{ ++$i }}</td>
-                                            <td>{{ $cr->name }}</td>
+                                            <td>{{ $cr->code }}</td>
                                             <td>{{ $cr->type }}</td>
                                             <td>{{ $cr->weight }}</td>
                                             <td>{{ $cr->description }}</td>
@@ -64,12 +64,12 @@
                                                         class="btn btn-danger">Delete</button>
                                                 </form>
                                             <td>
-                                            @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center">No Data Found</td>
-                                    </tr>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center">No Data Found</td>
+                                        </tr>
                                     @endforelse
-                                    </tr>
                                 </table>
                             </div>
                             <div class="float-right">

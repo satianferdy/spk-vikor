@@ -35,7 +35,7 @@ class CriteriaModelController extends Controller
         //
         try {
             $request->validate([
-                'name' => 'required|unique:criteria_models',
+                'code' => 'required|unique:criteria_models',
                 'type' => 'required',
                 'weight' => 'required',
                 'description' => 'required',
@@ -83,7 +83,7 @@ class CriteriaModelController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required',
+            'code' => 'required',
             'type' => 'required',
             'weight' => 'required',
             'description' => 'required',

@@ -32,9 +32,9 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label for="name">Kode Name</label>
-                                    <input id="name" type="text" class="form-control" placeholder="example: CI"
-                                        name="name" value="{{ $criterion->name }}" required />
+                                    <label for="code">Kode Name</label>
+                                    <input id="code" type="text" class="form-control" placeholder="example: CI"
+                                        name="code" value="{{ $criterion->code }}" required />
                                 </div>
                                 <div class="form-group">
                                     <label for="type">Type</label>

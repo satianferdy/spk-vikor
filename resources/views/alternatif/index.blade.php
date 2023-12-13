@@ -42,16 +42,16 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Name</th>
-                                        @foreach ($criteria as $c)
-                                            <th>{{ $c->name }}</th>
+                                        @foreach ($criterion as $c)
+                                            <th>{{ $c->description }}</th>
                                         @endforeach
                                         <th>Action</th>
                                     </tr>
-                                    <tr>
-                                        @forelse ($alternatif as $a)
+                                    @forelse ($alternatif as $a)
+                                        <tr>
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $a->name }}</td>
-                                            @foreach ($criteria as $cr)
+                                            @foreach ($criterion as $cr)
                                                 @php
                                                     // menggunakan methof first() untuk object pertama
                                                     $s = $scores
@@ -71,10 +71,11 @@
                                                         class="btn btn-danger">Delete</button>
                                                 </form>
                                             <td>
-                                            @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center">No Data Found</td>
-                                    </tr>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center">No Data Found</td>
+                                        </tr>
                                     @endforelse
                                     </tr>
                                 </table>

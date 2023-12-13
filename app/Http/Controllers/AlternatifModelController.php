@@ -32,8 +32,8 @@ class AlternatifModelController extends Controller
 
         $alternatif = AlternatifModel::get();
 
-        $criteria = CriteriaModel::get();
-        return view('alternatif.index', compact('scores', 'alternatif', 'criteria'))->with('i', 0);
+        $criterion = CriteriaModel::get();
+        return view('alternatif.index', compact('scores', 'alternatif', 'criterion'))->with('i', 0);
     }
 
     /**
@@ -42,8 +42,8 @@ class AlternatifModelController extends Controller
     public function create()
     {
         //
-        $criteria = CriteriaModel::get();
-        return view('alternatif.create', compact('criteria'));
+        $criterion = CriteriaModel::get();
+        return view('alternatif.create', compact('criterion'));
     }
 
     /**
@@ -53,7 +53,7 @@ class AlternatifModelController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required|unique:alternatif_models',
+            'name' => 'required',
             'score' => 'required|array',
             'score.*' => 'required|numeric',
         ]);
@@ -64,9 +64,9 @@ class AlternatifModelController extends Controller
         $alt->save();
 
         //save skor
-        $criteria = CriteriaModel::get();
-        foreach ($criteria as $c) {
-            $score = new AlternatifModel();
+        $criterion = CriteriaModel::get();
+        foreach ($criterion as $c) {
+            $score = new AlternatifSkor();
             $score->alternatif_id = $alt->id;
             $score->criteria_id = $c->id;
             $score->score = $request->score[$c->id] ?? 0;
@@ -91,9 +91,9 @@ class AlternatifModelController extends Controller
     public function edit(AlternatifModel $alternatif)
     {
         //
-        $criteria = CriteriaModel::get();
-        $alternatifskor = AlternatifModel::where('alternatif_id', $alternatif->id)->get();
-        return view('alternatif.edit', compact('alternatif', 'alternatifskor', 'criteria'));
+        $criterion = CriteriaModel::get();
+        $alternatifskor = AlternatifSkor::where('alternatif_id', $alternatif->id)->get();
+        return view('alternatif.edit', compact('alternatif', 'alternatifskor', 'criterion'));
     }
 
     /**
@@ -109,10 +109,10 @@ class AlternatifModelController extends Controller
         ]);
 
         //save skor
-        $criteria = CriteriaModel::get();
+        $criterion = CriteriaModel::get();
 
-        foreach ($criteria as $c) {
-            $score = AlternatifModel::updateOrCreate(
+        foreach ($criterion as $c) {
+            $score = AlternatifSkor::updateOrCreate(
                 [
                     'alternatif_id' => $alternatif->id,
                     'criteria_id' => $c->id,
@@ -128,6 +128,9 @@ class AlternatifModelController extends Controller
             'name' => $request->name,
         ]);
 
+        return redirect()->route('alternatif.index')
+            ->with('success', 'Alternatif updated succesfully');
+
     }
 
     /**
@@ -135,7 +138,7 @@ class AlternatifModelController extends Controller
      */
     public function destroy(AlternatifModel $alternatif)
     {
-        $score = AlternatifModel::where('alternatif_id', $alternatif->id)->delete();
+        $score = AlternatifSkor::where('alternatif_id', $alternatif->id)->delete();
         $alternatif->delete();
 
         return redirect()->route('alternatif.index')
