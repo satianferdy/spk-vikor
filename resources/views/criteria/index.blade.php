@@ -1,25 +1,21 @@
 @extends('layouts.app')
 
-@section('title', 'User List')
+@section('title', 'Data Criteria')
 
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>User List</h1>
+            <h1>Data Criteria</h1>
         </div>
 
         <div class="section-body">
-            <h2 class="section-title">User List</h2>
+            <h2 class="section-title">Criteria List</h2>
             <p class="section-lead">
-                You can manage all users, such as editing, deleting and more.
+                You can manage all criteria, such as editing, deleting and more.
             </p>
-
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4>All Users</h4>
-                        </div>
                         <div class="card-body">
                             <div class="card-header">
                                 <a href="{{ route('criteria.create') }}" class="btn btn-primary">Add Criteria</a>

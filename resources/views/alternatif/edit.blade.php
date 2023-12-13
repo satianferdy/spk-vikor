@@ -5,7 +5,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Add Data Criteria</h1>
+            <h1>Add Data Alternatif</h1>
         </div>
         <div class="section-body">
             <h2 class="section-title">Form Validation</h2>

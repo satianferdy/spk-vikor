@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CriteriaModelController;
 use App\Http\Controllers\AlternatifModelController;
-
+use App\Http\Controllers\DecisionMatrixController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,11 +19,14 @@ Route::get('/', function () {
     return view('dashboard.home');
 });
 
-
+Route::get('/dashboard', function () {
+    return view('dashboard.home');
+});
 
 Route::resources([
     'criteria' => CriteriaModelController::class,
     'alternatif' => AlternatifModelController::class,
+    'decisionmatrix' => DecisionMatrixController::class,
 ]);
 
 // Route::get('/criteria', [CriteriaModelController::class, 'index'])->name('criteria.index');
