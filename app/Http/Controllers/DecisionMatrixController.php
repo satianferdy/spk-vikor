@@ -17,7 +17,7 @@ class DecisionMatrixController extends Controller
         $alternatif = AlternatifModel::all();
         $criterion = CriteriaModel::all();
         $scores = AlternatifSkor::with(['alternatif', 'criteria'])->get();
-
+        // dd($scores);
         return view('decisionmatrix.index', compact('alternatif', 'criterion', 'scores'));
     }
 
