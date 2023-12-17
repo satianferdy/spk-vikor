@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CriteriaModelController;
 use App\Http\Controllers\AlternatifModelController;
 use App\Http\Controllers\DecisionMatrixController;
+use App\Http\Controllers\VikorMethodController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,19 +17,27 @@ use App\Http\Controllers\DecisionMatrixController;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.home');
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard.home');
 });
 
-Route::resources([
-    'criteria' => CriteriaModelController::class,
-    'alternatif' => AlternatifModelController::class,
-    'decisionmatrix' => DecisionMatrixController::class,
-]);
+Route::prefix('/')->group (function () {
+    Route::get('/', function () {
+        return view('dashboard.home');
+    });
+    Route::resource('criteria', CriteriaModelController::class);
+    Route::resource('alternatif', AlternatifModelController::class);
+    Route::resource('decisionmatrix', DecisionMatrixController::class);
+    Route::get('/calculate', [VikorMethodController::class, 'index'])->name('calculate.index');
+});
+
+// Route::resources([
+//     'criteria' => CriteriaModelController::class,
+//     'alternatif' => AlternatifModelController::class,
+//     'decisionmatrix' => DecisionMatrixController::class,
+// ]);
+
+// Route::get('/calculate', [VikorMethodController::class, 'index'])->name('calculate.index');
 
 // Route::get('/criteria', [CriteriaModelController::class, 'index'])->name('criteria.index');
 // Route::get('/criteria/create', [CriteriaModelController::class, 'create'])->name('criteria.create');

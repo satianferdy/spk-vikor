@@ -16,71 +16,93 @@ class VikorMethodController extends Controller
         $criterion = CriteriaModel::all();
         $scores = AlternatifSkor::with(['alternatif', 'criteria'])->get();
 
-        // Normalisasi Vikor
-        $minMax = [];
-        $maxXi = [];
-        $minXi = [];
-        $rank = [];
+        // get weight from criteria
+        $weights =  $criterion->pluck('weight');
+        $sumWeight = $weights->sum();
+        // calculate weight / sum weight
+        foreach ($weights as $key => $weight) {
+            $weights[$key] = number_format($weight / $sumWeight, 3);
+        }
 
-        $desiredDecimalPlaces = 3; // Sesuaikan dengan kebutuhan
+        $f_plus = [];
+        $f_min = [];
 
+        // calculate f_plus max for each criteria value and f_min min for each criteria value
         foreach ($criterion as $c) {
-            foreach ($scores as $s) {
-                if ($s->criteria_id == $c->id) {
-                    $minMax[$c->id][] = $s->score;
-                }
+            $criteriaId = $c->id;
+            $f_plus[$criteriaId] = $scores->where('criteria_id', $criteriaId)->pluck('score')->max();
+            $f_min[$criteriaId] = $scores->where('criteria_id', $criteriaId)->pluck('score')->min();
+        }
+
+        // normalize matrix
+        $normalizedMatrix = [];
+
+        foreach ($scores as $sc) {
+            $criteriaId = $sc->criteria_id;
+            $alternatifId = $sc->alternatif_id;
+            $score = $sc->score;
+
+            if (!isset($normalizedMatrix[$alternatifId])) {
+                $normalizedMatrix[$alternatifId] = [];
             }
 
-            // Check if there are values for the current $criteriaId
-            if (!empty($minMax[$c->id])) {
-                $values = $minMax[$c->id];
-                $maxXi[$c->id] = max($minMax[$values]);
-                $minXi[$c->id] = min($minMax[$values]);
+            $normalizedMatrix[$alternatifId][$criteriaId] = number_format(($f_plus[$criteriaId] - $score) / ($f_plus[$criteriaId] - $f_min[$criteriaId]), 3);
+        }
 
-                // Normalisasi and Weighting
-                foreach ($values as $value) {
-                    // Initialize $normalizedValue correctly using $value
-                    $normalizedValue = 0;
+        // calculate Weighted Matrix
+        $weightedMatrix = [];
 
-                    if ($maxXi[$c->id] - $minXi[$c->id] != 0) {
-                        if ($c->type == 'benefit') {
-                            $normalizedValue = ($minXi[$c->id] - $value) / ($maxXi[$c->id] - $minXi[$c->id]);
-                        } else {
-                            $normalizedValue = ($value - $maxXi[$c->id]) / ($maxXi[$c->id] - $minXi[$c->id]);
-                        }
-                    }
-
-                    // Round $normalizedValue to $desiredDecimalPlaces decimal places
-                    $normalizedValue = round($normalizedValue, $desiredDecimalPlaces);
-
-                    // Store $normalizedValue in the $tij
-                    $tij[$c->id][] = $normalizedValue;
-
+        foreach ($normalizedMatrix as $alternatifId => $criteriaValue) {
+            foreach ($criteriaValue as $criteriaId => $normalizedValue) {
+                if (!isset($weightedMatrix[$alternatifId])) {
+                    $weightedMatrix[$alternatifId] = [];
                 }
+
+                $weightedMatrix[$alternatifId][$criteriaId] = number_format($weights[$criteriaId - 1] * $normalizedValue, 3);
             }
         }
+
+        // calculate utility measure (S and R)
+        foreach ($weightedMatrix as $alternatifId => $criteriaValue) {
+            $s[$alternatifId] = 0;
+            $r[$alternatifId] = 0;
+            foreach ($criteriaValue as $criteriaId => $weightedValue) {
+                $s[$alternatifId] += number_format($weightedValue, 3);
+                $r[$alternatifId] = number_format(max($r[$alternatifId], $weightedValue),3);
+            }
+        }
+
+        // calculate vikor index (Q)
+        $s_min = min($s);
+        $s_max = max($s);
+        $r_min = min($r);
+        $r_max = max($r);
+        $v = 0.5;
+
+        foreach ($s as $alternatifId => $s_value) {
+            $r_value = $r[$alternatifId];
+            $q[$alternatifId] = number_format(($v * (($s_value - $s_min) / ($s_max - $s_min))) + ((1 - $v) * (($r_value - $r_min) / ($r_max - $r_min))),3);
+        }
+
+        // merge q value and alternatif
+        $result = array_combine($alternatif->pluck('name')->toArray(), $q);
+
+        // sort result by q value from lowest to highest
+        asort($result);
+        arsort($result);
+
+        // return view
+        return view('calculate.index', compact(
+            'alternatif',
+            'criterion',
+            'scores',
+            'weights',
+            'normalizedMatrix',
+            'weightedMatrix',
+            's',
+            'r',
+            'q',
+            'result'
+        ));
     }
-    // public function calculate(Request $request)
-    // {
-    //     // Mendapatkan data dari formulir
-    //     $criteria = CriteriaModel::all();
-    //     $alternatives = AlternatifModel::all();
-
-
-    //     // Normalisasi data kriteria
-    //     // TODO: Lakukan normalisasi data
-
-    //     // Penentuan solusi ideal positif dan negatif
-    //     // TODO: Tentukan solusi ideal positif (P) dan solusi ideal negatif (N)
-
-    //     // Perhitungan jarak antara solusi ideal dan solusi negatif
-    //     // TODO: Hitung jarak antara setiap alternatif dan solusi ideal (P dan N)
-
-    //     // Peringkat alternatif
-    //     // TODO: Lakukan peringkat alternatif berdasarkan jarak
-
-    //     // Menampilkan hasil ke view
-    //     return view('vkor.result', compact('ranking'));
-    // }
-
 }
