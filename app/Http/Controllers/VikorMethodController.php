@@ -45,8 +45,14 @@ class VikorMethodController extends Controller
             if (!isset($normalizedMatrix[$alternatifId])) {
                 $normalizedMatrix[$alternatifId] = [];
             }
+            // normalisai matrix dengan kondisi benefit dan cost
+            if ($criterion->where('id', $criteriaId)->first()->type == 'benefit') {
+                $normalizedMatrix[$alternatifId][$criteriaId] = number_format(($score - $f_min[$criteriaId]) / ($f_plus[$criteriaId] - $f_min[$criteriaId]), 3);
+            } else {
+                $normalizedMatrix[$alternatifId][$criteriaId] = number_format(($f_plus[$criteriaId] - $score) / ($f_plus[$criteriaId] - $f_min[$criteriaId]), 3);
+            }
 
-            $normalizedMatrix[$alternatifId][$criteriaId] = number_format(($f_plus[$criteriaId] - $score) / ($f_plus[$criteriaId] - $f_min[$criteriaId]), 3);
+            // $normalizedMatrix[$alternatifId][$criteriaId] = number_format(($f_plus[$criteriaId] - $score) / ($f_plus[$criteriaId] - $f_min[$criteriaId]), 3);
         }
 
         // dd($normalizedMatrix);

@@ -37,7 +37,7 @@
                                 </div>
                                 @foreach ($criterion as $key => $c)
                                     <div class="form-group">
-                                        <label for="score[{{ $c->id }}]">{{ $c->name }} -
+                                        <label for="score[{{ $c->id }}]">{{ $c->code }} -
                                             {{ $c->description }}</label>
                                         <input type="number" class="form-control" step="any"
                                             placeholder="example: 0.15" id="score[{{ $c->id }}]"
