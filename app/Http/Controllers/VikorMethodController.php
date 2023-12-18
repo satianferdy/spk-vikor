@@ -49,6 +49,9 @@ class VikorMethodController extends Controller
             $normalizedMatrix[$alternatifId][$criteriaId] = number_format(($f_plus[$criteriaId] - $score) / ($f_plus[$criteriaId] - $f_min[$criteriaId]), 3);
         }
 
+        // dd($normalizedMatrix);
+
+
         // calculate Weighted Matrix
         $weightedMatrix = [];
 
@@ -99,8 +102,11 @@ class VikorMethodController extends Controller
             'weights',
             'normalizedMatrix',
             'weightedMatrix',
-            's',
-            'r',
+            's_min',
+            's_max',
+            'r_min',
+            'r_max',
+            'v',
             'q',
             'result'
         ));

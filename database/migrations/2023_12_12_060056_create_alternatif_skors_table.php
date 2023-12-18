@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('alternatif_skors', function (Blueprint $table) {
-            $table->id();
             $table->unsignedBigInteger('alternatif_id');
             $table->foreign('alternatif_id')->references('id')->on('alternatif_models')->onDelete('cascade');
 

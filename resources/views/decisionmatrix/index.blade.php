@@ -20,7 +20,6 @@
                             <h4>All Data Vikor</h4>
                         </div>
                         <div class="card-body">
-                            <div class="clearfix mb-3"></div>
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>

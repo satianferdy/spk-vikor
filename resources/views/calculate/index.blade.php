@@ -13,14 +13,14 @@
             <p class="section-lead">
                 vikor is a method for multi-criteria decision making
             </p>
+            {{-- matrik F --}}
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>All Data Vikor</h4>
+                            <h4>Matrik Decision(F)</h4>
                         </div>
                         <div class="card-body">
-                            <div class="clearfix mb-3"></div>
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
@@ -51,13 +51,189 @@
                                     @endforelse
                                     </tr>
                                 </table>
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Criteria</th>
+                                        @foreach ($criterion as $cr)
+                                            <th>{{ $c->code }}</th>
+                                        @endforeach
+                                    </tr>
+                                    <tr>
+                                        <td>Weight</td>
+                                        @foreach ($weights as $weight)
+                                            <td>{{ $weight }}</td>
+                                        @endforeach
+                                    </tr>
+                                </table>
                             </div>
-                            <div class="float-right">
-                                <nav>
-                                    <ul class="pagination">
-                                        {{-- {{ $users->withQueryString()->links() }} --}}
-                                    </ul>
-                                </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{--  --}}
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Matrik Normalisasi(N)</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Alternative</th>
+                                        @foreach ($criterion as $c)
+                                            <th>{{ $c->code }}</th>
+                                        @endforeach
+                                    </tr>
+                                    @foreach ($alternatif as $altKey => $a)
+                                        <tr>
+                                            <td>{{ $a->name }}</td>
+                                            @foreach ($criterion as $critKey => $c)
+                                                <td>
+                                                    {{ $normalizedMatrix[$a->id][$c->id] }}
+                                                </td>
+                                            @endforeach
+                                        </tr>
+                                    @endforeach
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{--  --}}
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Matrik F*</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Criteria</th>
+                                        @foreach ($criterion as $c)
+                                            <th>{{ $c->code }}</th>
+                                        @endforeach
+                                    </tr>
+                                    <tr>
+                                        <td>Weight</td>
+                                        @foreach ($weights as $weight)
+                                            <td>
+                                                {{ $weight }}
+                                            </td>
+                                        @endforeach
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Alternatif</th>
+                                        @foreach ($criterion as $c)
+                                            <th>{{ $c->code }}</th>
+                                        @endforeach
+                                    </tr>
+                                    @foreach ($alternatif as $altKey => $a)
+                                        <tr>
+                                            <td>{{ $a->name }}</td>
+                                            @foreach ($criterion as $critKey => $c)
+                                                <td>
+                                                    {{ $weightedMatrix[$a->id][$c->id] }}
+                                                </td>
+                                            @endforeach
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{--  --}}
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Nilai Utility Measure S and Regret Measure R</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>S_Min</th>
+                                        <th>S_Max</th>
+                                        <th>R_Min</th>
+                                        <th>R_Max</th>
+                                        <th>V</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ $s_min }}</td>
+                                        <td>{{ $s_max }}</td>
+                                        <td>{{ $r_min }}</td>
+                                        <td>{{ $r_max }}</td>
+                                        <td>{{ $v }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{--  --}}
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Index Vikor(Q)</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Q</th>
+                                        <th>Nilai</th>
+                                    </tr>
+                                    @foreach ($q as $key => $value)
+                                        <tr>
+                                            <td>Q{{ $key }}</td>
+                                            <td>{{ $value }}</td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{--  --}}
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Rankings</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Rankings</th>
+                                        <th>Alternatif Code</th>
+                                        <th>Nilai Q</th>
+                                    </tr>
+                                    @foreach ($result as $key => $value)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $key }}</td>
+                                            <td>{{ $value }}</td>
+                                        </tr>
+                                    @endforeach
+                                </table>
                             </div>
                         </div>
                     </div>
