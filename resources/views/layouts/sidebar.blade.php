@@ -1,13 +1,15 @@
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-        <a href="index.html">Stisla</a>
+        <a href="index.html">Vikor</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
-        <a href="index.html">St</a>
+        <a href="index.html">Vr</a>
     </div>
     <ul class="sidebar-menu">
         @section('sidebar')
-            <li><a class="nav-link" href="{{ url('dashboard') }}">Dashboard</a></li>
+            <li class="nav-link">
+                <a href="{{ url('dashboard') }}"><i class="fas fa-home"></i><span>Dashboard</span></a>
+            </li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Data Processing</span></a>
                 <ul class="dropdown-menu">
@@ -27,8 +29,8 @@
         @show
     </ul>
     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-        <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">
-            <i class="fas fa-rocket"></i> Documentation
+        <a href="{{ url('calculate') }}" class="btn btn-primary btn-lg btn-block btn-icon-split">
+            <i class="fas fa-rocket"></i> Ranking Result
         </a>
     </div>
 </aside>

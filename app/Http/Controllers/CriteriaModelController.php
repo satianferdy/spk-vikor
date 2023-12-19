@@ -15,7 +15,11 @@ class CriteriaModelController extends Controller
     {
         //
         $criterion = CriteriaModel::get();
-        return view('criteria.index', compact('criterion'))->with('i', 0);
+
+        // sum all weight
+        $sumWeights = CriteriaModel::sum('weight');
+
+        return view('criteria.index', compact('criterion'))->with('i', 0)->with('sumWeights', $sumWeights);
     }
 
     /**
@@ -23,8 +27,9 @@ class CriteriaModelController extends Controller
      */
     public function create()
     {
-        //
-        return view('criteria.create');
+        // sum all weight
+        $sumWeights = CriteriaModel::sum('weight');
+        return view('criteria.create')->with('sumWeights', $sumWeights);
     }
 
     /**
@@ -41,6 +46,17 @@ class CriteriaModelController extends Controller
                 'description' => 'required',
             ]);
 
+            //make variable weight from request and sum all weight
+            $weights = $request->weight;
+            $weights = $weights + CriteriaModel::sum('weight');
+
+            //check if sum of weight is more than 1
+            if ($weights > 10.0) {
+                return redirect()->back()
+                                 ->withInput()
+                                 ->withErrors(['weight1' => 'Total weight cannot be more than 10.', 'weight2' => 'Please subtract weights from other criteria.']);
+            }
+
             CriteriaModel::create($request->all());
 
             return redirect()->route('criteria.index')
@@ -51,7 +67,7 @@ class CriteriaModelController extends Controller
                 // Error code 1062 is for duplicate entry
                 return redirect()->back()
                                  ->withInput()
-                                 ->withErrors(['name' => 'Nama kriteria sudah ada.']);
+                                 ->withErrors(['name' => 'Criteria code already exists']);
             }
             // Handle other query exceptions if needed
             return redirect()->route('criteria.index')
@@ -72,8 +88,9 @@ class CriteriaModelController extends Controller
      */
     public function edit(CriteriaModel $criterion)
     {
-        //
-        return view('criteria.edit', compact('criterion'));
+        // sum all weight
+        $sumWeights = CriteriaModel::sum('weight');
+        return view('criteria.edit', compact('criterion'))->with('sumWeights', $sumWeights);
     }
 
     /**
@@ -88,6 +105,25 @@ class CriteriaModelController extends Controller
             'weight' => 'required',
             'description' => 'required',
         ]);
+
+        //find weight from criterion
+        $weightBefore = CriteriaModel::where('id', $criterion->id)->first()->weight;
+
+        // make variable weight from request and sum all weight
+        $weights = $request->weight;
+
+        // subtract weight from criterion
+        $weights -= $weightBefore;
+
+        // sum all weight
+        $weights = $weights + CriteriaModel::sum('weight');
+
+        // check if sum of weight is more than 1
+        if ($weights > 10.0) {
+            return redirect()->back()
+                             ->withInput()
+                             ->withErrors(['weight1' => 'Total weight cannot be more than 10.', 'weight2' => 'Please subtract weights from other criteria.']);
+        }
 
         $criterion->update($request->all());
 

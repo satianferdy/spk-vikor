@@ -199,7 +199,7 @@
                                     </tr>
                                     @foreach ($q as $key => $value)
                                         <tr>
-                                            <td>Q{{ $key }}</td>
+                                            <td>Q{{ $loop->iteration }}</td>
                                             <td>{{ $value }}</td>
                                         </tr>
                                     @endforeach

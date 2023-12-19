@@ -20,18 +20,15 @@
                             <div class="card-header">
                                 <a href="{{ route('criteria.create') }}" class="btn btn-primary">Add Criteria</a>
                             </div>
-                            <div class="float-right">
-                                <form method="GET">
-                                    <div class="input-group">
-                                        <input name="search" type="text" class="form-control" placeholder="Search">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
 
-                            <div class="clearfix mb-3"></div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="alert alert-warning">
+                                        <div class="alert-title">Total Weight</div>
+                                        {{ $sumWeights }}
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="table-responsive">
                                 <table class="table table-striped">
