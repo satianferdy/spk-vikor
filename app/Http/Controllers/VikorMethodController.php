@@ -47,9 +47,9 @@ class VikorMethodController extends Controller
             }
             // normalisai matrix dengan kondisi benefit dan cost
             if ($criterion->where('id', $criteriaId)->first()->type == 'benefit') {
-                $normalizedMatrix[$alternatifId][$criteriaId] = number_format(($score - $f_min[$criteriaId]) / ($f_plus[$criteriaId] - $f_min[$criteriaId]), 3);
-            } else {
                 $normalizedMatrix[$alternatifId][$criteriaId] = number_format(($f_plus[$criteriaId] - $score) / ($f_plus[$criteriaId] - $f_min[$criteriaId]), 3);
+            } else {
+                $normalizedMatrix[$alternatifId][$criteriaId] = number_format(($f_min[$criteriaId] - $score) / ($f_min[$criteriaId] - $f_plus[$criteriaId]), 3);
             }
 
             // $normalizedMatrix[$alternatifId][$criteriaId] = number_format(($f_plus[$criteriaId] - $score) / ($f_plus[$criteriaId] - $f_min[$criteriaId]), 3);
@@ -67,7 +67,7 @@ class VikorMethodController extends Controller
                     $weightedMatrix[$alternatifId] = [];
                 }
 
-                $weightedMatrix[$alternatifId][$criteriaId] = number_format($weights[$criteriaId - 1] * $normalizedValue, 3);
+                $weightedMatrix[$alternatifId][$criteriaId] = number_format($normalizedValue * $weights[$criteriaId - 1] , 3);
             }
         }
 
@@ -76,6 +76,8 @@ class VikorMethodController extends Controller
             $s[$alternatifId] = 0;
             $r[$alternatifId] = 0;
             foreach ($criteriaValue as $criteriaId => $weightedValue) {
+                // $s = sum semua weighted value dari by alternatif
+                // $s[$alternatifId] += $weightedValue;
                 $s[$alternatifId] += number_format($weightedValue, 3);
                 $r[$alternatifId] = number_format(max($r[$alternatifId], $weightedValue),3);
             }
@@ -98,7 +100,7 @@ class VikorMethodController extends Controller
 
         // sort result by q value from lowest to highest
         asort($result);
-        arsort($result);
+
 
         // return view
         return view('calculate.index', compact(
@@ -108,6 +110,9 @@ class VikorMethodController extends Controller
             'weights',
             'normalizedMatrix',
             'weightedMatrix',
+            'alternatifId',
+            's',
+            'r',
             's_min',
             's_max',
             'r_min',

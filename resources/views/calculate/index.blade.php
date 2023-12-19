@@ -24,6 +24,21 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
+                                        <th>Criteria</th>
+                                        @foreach ($criterion as $cr)
+                                            <th>{{ $cr->code }}</th>
+                                        @endforeach
+                                    </tr>
+                                    <tr>
+                                        <td>Weight</td>
+                                        @foreach ($weights as $weight)
+                                            <td>{{ $weight }}</td>
+                                        @endforeach
+                                    </tr>
+                                </table>
+                                <hr>
+                                <table class="table table-striped">
+                                    <tr>
                                         <th>No</th>
                                         @foreach ($criterion as $c)
                                             <th>{{ $c->code }}</th>
@@ -49,20 +64,6 @@
                                             <td colspan="5" class="text-center">No Data Found</td>
                                         </tr>
                                     @endforelse
-                                    </tr>
-                                </table>
-                                <table class="table table-striped">
-                                    <tr>
-                                        <th>Criteria</th>
-                                        @foreach ($criterion as $cr)
-                                            <th>{{ $c->code }}</th>
-                                        @endforeach
-                                    </tr>
-                                    <tr>
-                                        <td>Weight</td>
-                                        @foreach ($weights as $weight)
-                                            <td>{{ $weight }}</td>
-                                        @endforeach
                                     </tr>
                                 </table>
                             </div>
@@ -128,10 +129,7 @@
                                         @endforeach
                                     </tr>
                                 </table>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
+                                <hr>
                                 <table class="table table-striped">
                                     <tr>
                                         <th>Alternatif</th>
