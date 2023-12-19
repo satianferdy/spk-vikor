@@ -22,7 +22,7 @@
                     <span>Vikor Result</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="{{ route('decisionmatrix.index') }}">Decision Matrix</a></li>
-                    <li><a class="nav-link" href="{{ url('calculate') }}">Calculate Vikor</a></li>
+                    <li><a class="nav-link" href="{{ route('calculate.index') }}">Calculate Vikor</a></li>
                     {{-- <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li> --}}
                 </ul>
             </li>

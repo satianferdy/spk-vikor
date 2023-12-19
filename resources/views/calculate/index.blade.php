@@ -185,7 +185,7 @@
             </div>
             {{--  --}}
             <div class="row mt-2">
-                <div class="col-12">
+                <div class="col-6">
                     <div class="card">
                         <div class="card-header">
                             <h4>Index Vikor(Q)</h4>
@@ -208,10 +208,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            {{--  --}}
-            <div class="row mt-2">
-                <div class="col-12">
+                <div class="col-6">
                     <div class="card">
                         <div class="card-header">
                             <h4>Rankings</h4>
