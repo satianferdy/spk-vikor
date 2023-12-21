@@ -17,7 +17,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>All Data Vikor</h4>
+                            <h4>Decision Matrik Table</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -50,13 +50,6 @@
                                     @endforelse
                                     </tr>
                                 </table>
-                            </div>
-                            <div class="float-right">
-                                <nav>
-                                    <ul class="pagination">
-                                        {{-- {{ $users->withQueryString()->links() }} --}}
-                                    </ul>
-                                </nav>
                             </div>
                         </div>
                     </div>

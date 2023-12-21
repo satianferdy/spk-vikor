@@ -109,7 +109,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Matrik F*</h4>
+                            <h4>Normalisasi Weight(F*)</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -153,12 +153,12 @@
                     </div>
                 </div>
             </div>
-            {{--  --}}
+            {{-- S & R --}}
             <div class="row mt-2">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Nilai Utility Measure S and Regret Measure R</h4>
+                            <h4>Result Utility Measure (S) and Regret Measure (R)</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -183,7 +183,11 @@
                     </div>
                 </div>
             </div>
-            {{--  --}}
+            {{-- Q & Rank --}}
+            <h2 class="section-title">Vikor Final Result</h2>
+            <p class="section-lead">
+                Q is the final result of the vikor method and the ranking of the alternatives
+            </p>
             <div class="row mt-2">
                 <div class="col-6">
                     <div class="card">
